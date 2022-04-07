@@ -20,14 +20,17 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    //GET all
     public List<User> getUser(){
         return userRepository.findAll();
     }
 
+    //GET by id
     public Optional<User> getUserById(Long Id){
        return userRepository.findById(Id);
     }
 
+    //POST
     public void addNewUser(User user) {
         Optional<User> userOptional =
                 userRepository.findUserByUsername(user.getUsername());
@@ -37,6 +40,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    //DELETE by id
     public void deleteUser(Long userId) {
         boolean exists = userRepository.existsById(userId);
         if (!exists){
@@ -47,6 +51,7 @@ public class UserService {
 
     }
 
+    //PUT
     @Transactional
     public void updateUser(Long userId,
                            String username,
@@ -56,7 +61,7 @@ public class UserService {
                 .orElseThrow(()-> new IllegalStateException(
                         "user with id " + userId + " does not exist."
                 ));
-
+        //UPDATE username
         if (username != null && username.length() > 0 &&
         !Objects.equals(user.getUsername(), username)){
             Optional<User> userOptional = userRepository
@@ -66,12 +71,12 @@ public class UserService {
             }
             user.setUsername(username);
         }
-
+        //UPDATE description
         if (description != null && description.length() > 0 &&
                 !Objects.equals(user.getDescription(), description)){
             user.setDescription(description);
         }
-
+        //UPDATE targetDate
         if (targetDate != null && targetDate.length() > 0 &&
                 !Objects.equals(user.getTargetDate(), targetDate)){
             user.setTargetDate(targetDate);

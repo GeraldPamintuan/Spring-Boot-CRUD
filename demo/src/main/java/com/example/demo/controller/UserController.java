@@ -19,28 +19,28 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+    //GET ALL
     @GetMapping(path = "/todo")
     public List<User> getUser(){
         return userService.getUser();
     }
-
+    //GET by ID
     @GetMapping(path = "todo/{userId}")
     public Optional<User> getUserById(@PathVariable("userId") Long userId){
         return userService.getUserById(userId);
     }
-
+    //ADD
     @PostMapping(path = "/todo")
     public void addNewUser(@RequestBody User user){
         userService.addNewUser(user);
     }
-
-    @DeleteMapping(path = "{userId}")
+    //DELETE BY ID
+    @DeleteMapping(path = "todo/{userId}")
     public void deleteUser(@PathVariable("userId") Long userId){
         userService.deleteUser(userId);
 
     }
-
+    //UPDATE BY ID
     @PutMapping(path = "todo/{userId}")
     public void updateUser(
             @PathVariable("userId") Long userId,
